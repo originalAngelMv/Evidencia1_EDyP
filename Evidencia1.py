@@ -1,4 +1,5 @@
 import datetime
+import re
 
 notas = []
 folios_contador = 0
