@@ -4,7 +4,7 @@ import re
 notas = []
 folios_contador = 0
 
-patron_fecha = r"^\d{1,2}-\d{2}-\d{4}"
+patron_fecha = r"^\d{1,2}-\d{2}-\d{4}$"
 
 while True:
     
