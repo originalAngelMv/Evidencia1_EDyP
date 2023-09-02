@@ -171,14 +171,71 @@ while True:
                     print('Fin de las notas')
             else:
                 print('\nNo se encontraron notas en el período especificado')
-        elif consulta_opcion == "2":
-            pass
                 
-                 
-            #Prueba
+        elif consulta_opcion=="2":
+            while True:
                 
-    
+                folio_consulta = input("Ingrese el folio de la nota a consultar: ")
+                
+                if folio_consulta.strip()=="":
+                    print("Dato no puede omitirse. Intente denuevo.")
+                    continue
+                
+                try:
+                    folio_consulta=int(folio_consulta)
+                except Exception:
+                    print("Carácter no valido. Solo dígitos numéricos")
+                    continue
+                else:
+                    break
+                
             
             
+            
+            for nota in notas:
+                
+                if nota['folio'] == folio_consulta and nota['estado']:
+                    
+                    print("\nDetalles de la nota:")
+                    print(f"Folio: {nota['folio']}")
+                    print(f"Cliente: {nota['cliente']}")
+                    print(f"Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
+                    print("Detalle:")
+                    
+                    for servicio, costo in nota['detalle']:
+                        print(f"  Servicio: {servicio}---> Costo: {costo:.2f}")
+                        
+                    print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")    
+            else:
+                print("\nNo se encontró una nota con el folio especificado.")
+        else:
+            print("Opción no valida.")
+    elif opcion=="3":
         
-        
+        while True:
+            
+            folio_cancelar = input("Ingrese el folio de la nota a cancelar:\t ")
+            
+            if folio_cancelar.strip()=="":
+                print("Dato no puede omitirse. Intente denuevo.")
+                continue
+            
+            try:
+                folio_cancelar=int(folio_cancelar)
+            except Exception:
+                print("Carácter no valido. Solo dígitos numéricos")
+                continue
+            else:
+                break
+
+        for nota in notas:
+            
+            if nota['folio'] == folio_cancelar:
+                if nota['estado']:
+                    print("\nDetalles de la nota a cancelar:")
+                    print(f"Folio: {nota['folio']}")
+                    print(f"Cliente: {nota['cliente']}")
+                    print(f"Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
+                    
+                    print("Detalle:\t")
+                    
