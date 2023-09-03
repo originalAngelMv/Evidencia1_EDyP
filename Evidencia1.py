@@ -41,7 +41,7 @@ while True:
             
             
             try:
-                fecha_ingresada = datetime.datetime.strftime(fecha_ingresada_str, "%d-%m-%Y")
+                fecha_ingresada = datetime.datetime.strptime(fecha_ingresada_str, "%d-%m-%Y")
             except Exception:
                 print("La fecha NO existe. Intente nuevamente.")
                 continue
