@@ -4,6 +4,7 @@ import re
 notas = []
 folios_contador = 0
 
+
 patron_fecha = r"^\d{1,2}-\d{2}-\d{4}$"
 
 while True:
@@ -238,4 +239,60 @@ while True:
                     print(f"Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
                     
                     print("Detalle:\t")
-                    
+                    for servicio, costo in total['detalle']:
+                        print(f" Servicio: {servicio} ---> Costo {costo:.2f}")
+                        
+                        print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")
+                        
+                        confirmacion_cancelacion = input("¿Está seguro que quiere cancelar está nota? (s/n): ")
+                        
+                        if confirmacion_cancelacion.lower() == "s":
+                            nota['estado'] = False
+                            print(f"Nota con folio (folio_cancelar) ha sido cancelada.")
+                        else:
+                            print(f"Nota con folio (folio_cancelar) no ha sido cancelada.")
+                        else:
+                            print("La nota ha sido cancelada.")
+                        break
+                else:
+                    print("No se encontró una nota con el folio especificado.")
+
+            elif opción == "4":
+                print("Notas canceladas")
+                notas_canceladas = [nota for nota in notas if not nota['estado']}
+                if not notas_canceladas:
+                print("No hay notas canceladas.")
+            else:
+                print("Folio\tCliente\tFecha")
+                for nota in notas_canceladas:
+                    print(f"{nota['folio']}\t{nota['fecha'].strftime('%d-%m-%Y')}")
+
+                folio_recuperar = input("Ingrese el folio de la nota que desea recuperar o presione Enter para cancerlar: ")
+                if folio_recuperar.strip() != "":
+                    try:
+                        folio_recuperar = int(folio_recuperar)
+                    except ValueError:
+                        print("Folio inválido. Debe ser un número entero.")
+                        continue
+
+                    for nota in notas:
+                        if nota['folio'] == folio_recuperarand not nota['estado']:
+                            confirmacion_recuperar = input("¿Está seguro de que desea recuperar está nota? (s/n): ")
+                            if confirmacion_recuperar.lower() == "s":
+                                nota['estado'] = True
+                                print(f"Nota con folio {folio_recuperar} ha sido recuperada.")
+                            else:
+                                print(f"Nota con folio {folio_recuperar} no ha sido recuperada.")
+                            break
+                else:
+                    print(f"No se encontró una nota cancelada con el folio {folio_recuperar}.")
+
+                elif opcion == "5":
+                    confirmacion_salir = input(¿Está seguro de que desea salir? (s/n): ")
+                    if confirmacion_salir.lower() == "s":
+                        break
+                        
+                else:
+                    print("Opción no válida. Por favor, seleccione una opción válida del menú.")
+
+print("Saliendo del programa. !Hasta luego!")
