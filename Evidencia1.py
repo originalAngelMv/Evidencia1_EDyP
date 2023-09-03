@@ -4,7 +4,6 @@ import re
 notas = []
 folios_contador = 0
 
-
 patron_fecha = r"^\d{1,2}-\d{2}-\d{4}$"
 
 while True:
@@ -107,8 +106,6 @@ while True:
             print(f"servicio: {servicio}---->costo: {costo}")
         print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")
     
-    
-    
     elif opcion == "2":
         print("\n1. Consultar por período.\n2. Consultar por folio.")
         consulta_opcion = input("\nIngrese una opción de consulta:\n")
@@ -190,9 +187,6 @@ while True:
                 else:
                     break
                 
-            
-            
-            
             for nota in notas:
                 
                 if nota['folio'] == folio_consulta and nota['estado']:
@@ -211,6 +205,7 @@ while True:
                 print("\nNo se encontró una nota con el folio especificado.")
         else:
             print("Opción no valida.")
+            
     elif opcion=="3":
         
         while True:
@@ -239,60 +234,66 @@ while True:
                     print(f"Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
                     
                     print("Detalle:\t")
-                    for servicio, costo in total['detalle']:
-                        print(f" Servicio: {servicio} ---> Costo {costo:.2f}")
-                        
-                        print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")
-                        
-                        confirmacion_cancelacion = input("¿Está seguro que quiere cancelar está nota? (s/n): ")
-                        
-                        if confirmacion_cancelacion.lower() == "s":
-                            nota['estado'] = False
-                            print(f"Nota con folio (folio_cancelar) ha sido cancelada.")
-                        else:
-                            print(f"Nota con folio (folio_cancelar) no ha sido cancelada.")
-                        else:
-                            print("La nota ha sido cancelada.")
-                        break
+                    for servicio, costo in nota['detalle']:
+                        print(f"  Servicio: {servicio} ---> Costo: {costo:.2f}")
+                    print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")
+                    
+                    confirmacion = input("¿Desea cancelar esta nota? (s/n): ")
+                    
+                    if confirmacion.lower() == "s":
+                        nota['estado'] = False
+                        print("La nota ha sido cancelada.")
+                    else:
+                        print("La nota no ha sido cancelada.")
                 else:
-                    print("No se encontró una nota con el folio especificado.")
-
-            elif opción == "4":
-                print("Notas canceladas")
-                notas_canceladas = [nota for nota in notas if not nota['estado']}
-                if not notas_canceladas:
-                print("No hay notas canceladas.")
-            else:
-                print("Folio\tCliente\tFecha")
-                for nota in notas_canceladas:
-                    print(f"{nota['folio']}\t{nota['fecha'].strftime('%d-%m-%Y')}")
-
-                folio_recuperar = input("Ingrese el folio de la nota que desea recuperar o presione Enter para cancerlar: ")
-                if folio_recuperar.strip() != "":
-                    try:
-                        folio_recuperar = int(folio_recuperar)
-                    except ValueError:
-                        print("Folio inválido. Debe ser un número entero.")
-                        continue
-
+                    print("\nEsta nota ya ha sido cancelada.")
+                break
+        else:
+            print("\nNo se encontró una nota con el folio especificado.")
+    
+    elif opcion == "4":
+        notas_canceladas = [nota for nota in notas if not nota['estado']]
+        if notas_canceladas:
+            print("\nNotas canceladas:")
+            for nota in notas_canceladas:
+                print(f"Folio: {nota['folio']}, Cliente: {nota['cliente']}, Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
+                print("-" * 100)
+            folio_recuperar = input("Ingrese el folio de la nota que desea recuperar o presione Enter para cancelar: ")
+            
+            if folio_recuperar.strip() != "":
+                try:
+                    folio_recuperar = int(folio_recuperar)
+                except Exception:
+                    print("Carácter no válido. Solo dígitos numéricos")
+                else:
                     for nota in notas:
-                        if nota['folio'] == folio_recuperarand not nota['estado']:
-                            confirmacion_recuperar = input("¿Está seguro de que desea recuperar está nota? (s/n): ")
-                            if confirmacion_recuperar.lower() == "s":
+                        if nota['folio'] == folio_recuperar and not nota['estado']:
+                            print("\nDetalles de la nota a recuperar:")
+                            print(f"Folio: {nota['folio']}")
+                            print(f"Cliente: {nota['cliente']}")
+                            print(f"Fecha: {nota['fecha'].strftime('%d-%m-%Y')}")
+                            print("Detalle:")
+                            for servicio, costo in nota['detalle']:
+                                print(f"  Servicio: {servicio} ---> Costo: {costo:.2f}")
+                            print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")
+                            
+                            confirmacion = input("¿Desea recuperar esta nota? (s/n): ")
+                            
+                            if confirmacion.lower() == "s":
                                 nota['estado'] = True
-                                print(f"Nota con folio {folio_recuperar} ha sido recuperada.")
+                                print("La nota ha sido recuperada.")
                             else:
-                                print(f"Nota con folio {folio_recuperar} no ha sido recuperada.")
+                                print("La nota no ha sido recuperada.")
                             break
-                else:
-                    print(f"No se encontró una nota cancelada con el folio {folio_recuperar}.")
-
-                elif opcion == "5":
-                    confirmacion_salir = input(¿Está seguro de que desea salir? (s/n): ")
-                    if confirmacion_salir.lower() == "s":
-                        break
-                        
-                else:
-                    print("Opción no válida. Por favor, seleccione una opción válida del menú.")
-
-print("Saliendo del programa. !Hasta luego!")
+                    else:
+                        print("\nNo se encontró una nota con el folio especificado.")
+        else:
+            print("\nNo hay notas canceladas para recuperar.")
+    
+    elif opcion == "5":
+        confirmacion = input("¿Está seguro de que desea salir? (s/n): ")
+        if confirmacion.lower() == "s":
+            print("Saliendo del programa.")
+            break
+    else:
+        print("Opción no válida. Intente nuevamente.")
