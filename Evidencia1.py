@@ -191,13 +191,13 @@ while True:
             nota_encontrada=[]
             
             for nota in notas:
-                
                 if nota['folio'] == folio_consulta and nota['estado']:
-                    
                     nota_encontrada.append(nota)
-                else:
-                    print("\nNo se encontró una nota con el folio especificado.")
-                    
+            
+            if len(nota_encontrada)==0:
+                print("No se encontro el número de folio.")
+                continue
+                
             for nota in nota_encontrada:        
                 print("\nDetalles de la nota:")
                 print(f"Folio: {nota['folio']}")
@@ -209,9 +209,10 @@ while True:
                     print(f"  Servicio: {servicio}---> Costo: {costo:.2f}")
                     
                 print(f"Monto total a pagar: {nota['monto_a_pagar']:.2f}")    
-
+            else:
+                print("-"*100)
         else:
-            print("Opción no valida.")
+            print("Opcion no valida")
     elif opcion=="3":
         
         while True:
