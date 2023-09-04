@@ -324,8 +324,8 @@ while True:
                                 if nota['folio']==folio_recuperar:
                                     nota['estado'] = True
                             print(f"Nota con folio {folio_recuperar} ha sido recuperada.")
-                    else:
-                        print("Esta nota se NO se encuentra cancelada.\t")
+                        else:
+                            print("Nota no se cancelo.")
                 else:
                     print('Folio no encontrada')
             else:
